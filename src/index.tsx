@@ -1,29 +1,6 @@
-import { NativeModules, Platform } from 'react-native';
+import { Text } from 'react-native';
+// write react fucntional Test component and export whihc print hello world
 
-const LINKING_ERROR =
-  `The package 'react-native-qrscanner' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
-
-// @ts-expect-error
-const isTurboModuleEnabled = global.__turboModuleProxy != null;
-
-const QrscannerModule = isTurboModuleEnabled
-  ? require('./NativeQrscanner').default
-  : NativeModules.Qrscanner;
-
-const Qrscanner = QrscannerModule
-  ? QrscannerModule
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
-
-export function multiply(a: number, b: number): Promise<number> {
-  return Qrscanner.multiply(a, b);
+export function HelloWorld() {
+  return <Text>hello world</Text>;
 }
